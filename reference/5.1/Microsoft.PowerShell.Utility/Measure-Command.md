@@ -2,11 +2,12 @@
 external help file: Microsoft.PowerShell.Commands.Utility.dll-Help.xml
 Locale: en-US
 Module Name: Microsoft.PowerShell.Utility
-ms.date: 12/09/2020
-online version: https://docs.microsoft.com/powershell/module/microsoft.powershell.utility/measure-command?view=powershell-5.1&WT.mc_id=ps-gethelp
+ms.date: 12/12/2022
+online version: https://learn.microsoft.com/powershell/module/microsoft.powershell.utility/measure-command?view=powershell-5.1&WT.mc_id=ps-gethelp
 schema: 2.0.0
 title: Measure-Command
 ---
+
 # Measure-Command
 
 ## SYNOPSIS
@@ -44,7 +45,7 @@ uses the **Path** parameter to get only `.txt` files in the `C:\Windows` directo
 subdirectories.
 
 The second command measures the time it takes to process a recursive `Get-ChildItem` command that
-uses the provider-specific ` parameter.
+uses the provider-specific **Filter** parameter.
 
 These commands show the value of using a provider-specific filter in PowerShell commands.
 
@@ -207,13 +208,13 @@ This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable
 
 ### System.Management.Automation.PSObject
 
-You can pipe an object to `Measure-Command`.
+You can pipe an object to this cmdlet.
 
 ## OUTPUTS
 
 ### System.TimeSpan
 
-`Measure-Command` returns a time span object that represents the result.
+This cmdlet returns a time span object representing the result.
 
 ## NOTES
 

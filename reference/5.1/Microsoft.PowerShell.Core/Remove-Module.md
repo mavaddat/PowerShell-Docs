@@ -2,8 +2,8 @@
 external help file: System.Management.Automation.dll-Help.xml
 Locale: en-US
 Module Name: Microsoft.PowerShell.Core
-ms.date: 09/28/2021
-online version: https://docs.microsoft.com/powershell/module/microsoft.powershell.core/remove-module?view=powershell-5.1&WT.mc_id=ps-gethelp
+ms.date: 07/10/2023
+online version: https://learn.microsoft.com/powershell/module/microsoft.powershell.core/remove-module?view=powershell-5.1&WT.mc_id=ps-gethelp
 schema: 2.0.0
 title: Remove-Module
 ---
@@ -23,7 +23,8 @@ Remove-Module [-Name] <String[]> [-Force] [-WhatIf] [-Confirm] [<CommonParameter
 ### FullyQualifiedName
 
 ```
-Remove-Module [-FullyQualifiedName] <ModuleSpecification[]> [-Force] [-WhatIf] [-Confirm] [<CommonParameters>]
+Remove-Module [-FullyQualifiedName] <ModuleSpecification[]> [-Force] [-WhatIf] [-Confirm]
+ [<CommonParameters>]
 ```
 
 ### ModuleInfo
@@ -38,10 +39,10 @@ The `Remove-Module` cmdlet removes the members of a module, such as cmdlets and 
 current session.
 
 If the module includes an assembly (`.dll`), all members that are implemented by the assembly are
-removed, but the assembly is not unloaded.
+removed, but the assembly isn't unloaded.
 
-This cmdlet does not uninstall the module or delete it from the computer. It affects only the
-current PowerShell session.
+This cmdlet doesn't uninstall the module or delete it from the computer. It affects only the current
+PowerShell session.
 
 ## EXAMPLES
 
@@ -92,9 +93,10 @@ The command uses a pipeline operator (`|`) to send the module names to `Remove-M
 
 The **Verbose** messages show the items that are removed. The messages differ because the
 BitsTransfer module includes an assembly that implements its cmdlets and a nested module with its
-own assembly. The PSDiagnostics module includes a module script file (`.psm1`) that exports functions.
+own assembly. The PSDiagnostics module includes a module script file (`.psm1`) that exports
+functions.
 
-### Example 4: Remove a module by using ModuleInfo
+### Example 4: Remove a module using ModuleInfo
 
 ```powershell
 $a = Get-Module BitsTransfer
@@ -102,6 +104,32 @@ Remove-Module -ModuleInfo $a
 ```
 
 This command uses the **ModuleInfo** parameter to remove the BitsTransfer module.
+
+### Example 5: Using the OnRemove event
+
+When removing a module, there is an event trigger by the module that allows a module to react to
+being removed and perform some cleanup task, such as freeing resources.
+
+```powershell
+$OnRemoveScript = {
+    # perform cleanup
+    $cachedSessions | Remove-PSSession
+}
+$ExecutionContext.SessionState.Module.OnRemove += $OnRemoveScript
+
+$registerEngineEventSplat = @{
+    SourceIdentifier = ([System.Management.Automation.PsEngineEvent]::Exiting)
+    Action = $OnRemoveScript
+}
+Register-EngineEvent @registerEngineEventSplat
+```
+
+The `$OnRemoveScript` variable contains the script block that cleans up the resources. You register
+the script block by assigning it to `$ExecutionContext.SessionState.Module.OnRemove`. You can also
+use `Register-EngineEvent` to have the script block execute when the PowerShell session ends.
+
+For script-based modules, you would add this code to the `.PSM1` file or put it in a startup script
+that is listed in the **ScriptsToProcess** property of the module manifest.
 
 ## PARAMETERS
 
@@ -126,7 +154,23 @@ Accept wildcard characters: False
 
 ### -FullyQualifiedName
 
-Specifies the fully qualified names of modules to remove.
+The value can be a module name, a full module specification, or a path to a module file.
+
+When the value is a path, the path can be fully qualified or relative. A relative path is resolved
+relative to the script that contains the using statement.
+
+When the value is a name or module specification, PowerShell searches the **PSModulePath** for the
+specified module.
+
+A module specification is a hashtable that has the following keys.
+
+- `ModuleName` - **Required** Specifies the module name.
+- `GUID` - **Optional** Specifies the GUID of the module.
+- It's also **Required** to specify at least one of the three below keys.
+  - `ModuleVersion` - Specifies a minimum acceptable version of the module.
+  - `MaximumVersion` - Specifies the maximum acceptable version of the module.
+  - `RequiredVersion` - Specifies an exact, required version of the module. This can't be used with
+    the other Version keys.
 
 ```yaml
 Type: Microsoft.PowerShell.Commands.ModuleSpecification[]
@@ -142,9 +186,9 @@ Accept wildcard characters: False
 
 ### -ModuleInfo
 
-Specifies the module objects to remove. Enter a variable that contains a module object
-(**PSModuleInfo**) or a command that gets a module object, such as a `Get-Module` command. You can
-also pipe module objects to `Remove-Module`.
+Specifies the module objects to remove. Enter a variable that contains a **PSModuleInfo** object or
+a command that gets a module object, such as a `Get-Module` command. You can also pipe module
+objects to `Remove-Module`.
 
 ```yaml
 Type: System.Management.Automation.PSModuleInfo[]
@@ -193,7 +237,7 @@ Accept wildcard characters: False
 
 ### -WhatIf
 
-Shows what would happen if the cmdlet runs. The cmdlet is not run.
+Shows what would happen if the cmdlet runs. The cmdlet isn't run.
 
 ```yaml
 Type: System.Management.Automation.SwitchParameter
@@ -211,21 +255,33 @@ Accept wildcard characters: False
 
 This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable,
 -InformationAction, -InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose,
--WarningAction, and -WarningVariable. For more information, see [about_CommonParameters](https://go.microsoft.com/fwlink/?LinkID=113216).
+-WarningAction, and -WarningVariable. For more information, see
+[about_CommonParameters](https://go.microsoft.com/fwlink/?LinkID=113216).
 
 ## INPUTS
 
-### System.String, System.Management.Automation.PSModuleInfo
+### System.String
 
-You can pipe module names and module objects to `Remove-Module`.
+You can pipe a module name to this cmdlet.
+
+### System.Management.Automation.PSModuleInfo
+
+You can pipe a module object to this cmdlet.
 
 ## OUTPUTS
 
 ### None
 
-This cmdlet does not generate any output.
+This cmdlet returns no output.
 
 ## NOTES
+
+Windows PowerShell includes the following aliases for `Remove-Module`:
+
+- `rmo`
+
+When you remove a module, there is an event is triggered that can be used to run some cleanup code.
+For more details, see [Example 5](#example-5-using-the-onremove-event).
 
 ## RELATED LINKS
 

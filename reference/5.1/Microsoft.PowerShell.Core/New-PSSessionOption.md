@@ -2,8 +2,8 @@
 external help file: System.Management.Automation.dll-Help.xml
 Locale: en-US
 Module Name: Microsoft.PowerShell.Core
-ms.date: 05/18/2022
-online version: https://docs.microsoft.com/powershell/module/microsoft.powershell.core/new-pssessionoption?view=powershell-5.1&WT.mc_id=ps-gethelp
+ms.date: 12/09/2022
+online version: https://learn.microsoft.com/powershell/module/microsoft.powershell.core/new-pssessionoption?view=powershell-5.1&WT.mc_id=ps-gethelp
 schema: 2.0.0
 title: New-PSSessionOption
 ---
@@ -448,7 +448,8 @@ computer. This option is designed to protect the resources on the client compute
 bytes.
 
 In Windows PowerShell 2.0, if you omit this parameter, there is no object size limit. Beginning in
-Windows PowerShell 3.0, if you omit this parameter, the default value is `200`.
+Windows PowerShell 3.0, if you omit this parameter, the default value is `209715200` bytes (or
+`200MB`).
 
 ```yaml
 Type: System.Int32
@@ -457,7 +458,7 @@ Aliases:
 
 Required: False
 Position: Named
-Default value: 200 MB
+Default value: 209715200
 Accept pipeline input: False
 Accept wildcard characters: False
 ```
@@ -793,7 +794,7 @@ This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable
 
 ### None
 
-You cannot pipe input to this cmdlet.
+You can't pipe objects to this cmdlet.
 
 ## OUTPUTS
 

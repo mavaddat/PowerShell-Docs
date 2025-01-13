@@ -2,8 +2,8 @@
 external help file: Microsoft.PowerShell.Commands.Utility.dll-Help.xml
 Locale: en-US
 Module Name: Microsoft.PowerShell.Utility
-ms.date: 04/05/2021
-online version: https://docs.microsoft.com/powershell/module/microsoft.powershell.utility/export-pssession?view=powershell-5.1&WT.mc_id=ps-gethelp
+ms.date: 12/12/2022
+online version: https://learn.microsoft.com/powershell/module/microsoft.powershell.utility/export-pssession?view=powershell-5.1&WT.mc_id=ps-gethelp
 schema: 2.0.0
 title: Export-PSSession
 ---
@@ -357,19 +357,26 @@ Accept wildcard characters: False
 
 ### -FullyQualifiedModule
 
-Specifies modules with names that are specified in the form of **ModuleSpecification** objects. See
-the Remarks section of
-[ModuleSpecification Constructor (Hashtable)](/dotnet/api/microsoft.powershell.commands.modulespecification.-ctor#Microsoft_PowerShell_Commands_ModuleSpecification__ctor_System_Collections_Hashtable_).
+The value can be a module name, a full module specification, or a path to a module file.
 
-For example, the **FullyQualifiedModule** parameter accepts a module name that is specified in
-either of these formats:
+When the value is a path, the path can be fully qualified or relative. A relative path is resolved
+relative to the script that contains the using statement.
 
-- `@{ModuleName = "modulename"; ModuleVersion = "version_number"}`
-- `@{ModuleName = "modulename"; ModuleVersion = "version_number"; Guid = "GUID"}`
+When the value is a name or module specification, PowerShell searches the **PSModulePath** for the
+specified module.
 
-**ModuleName** and **ModuleVersion** are required, but **Guid** is optional. You cannot specify the
-**FullyQualifiedModule** parameter in the same command as a **Module** parameter. the two
-parameters are mutually exclusive.
+A module specification is a hashtable that has the following keys.
+
+- `ModuleName` - **Required** Specifies the module name.
+- `GUID` - **Optional** Specifies the GUID of the module.
+- It's also **Required** to specify at least one of the three below keys.
+  - `ModuleVersion` - Specifies a minimum acceptable version of the module.
+  - `MaximumVersion` - Specifies the maximum acceptable version of the module.
+  - `RequiredVersion` - Specifies an exact, required version of the module. This can't be used with
+    the other Version keys.
+
+You can't specify the **FullyQualifiedModule** parameter in the same command as a **Module**
+parameter. the two parameters are mutually exclusive.
 
 ```yaml
 Type: Microsoft.PowerShell.Commands.ModuleSpecification[]
@@ -406,7 +413,7 @@ Accept wildcard characters: False
 ### -OutputModule
 
 Specifies an optional path and name for the module created by `Export-PSSession`. The default path
-is `$home\Documents\WindowsPowerShell\Modules`. This parameter is required.
+is `$HOME\Documents\WindowsPowerShell\Modules`. This parameter is required.
 
 If the module subdirectory or any of the files that `Export-PSSession` creates already exist, the
 command fails. To overwrite existing files, use the **Force** parameter.
@@ -418,7 +425,7 @@ Aliases: PSPath, ModuleName
 
 Required: True
 Position: 1
-Default value: $home\Documents\WindowsPowerShell\Modules
+Default value: $HOME\Documents\WindowsPowerShell\Modules
 Accept pipeline input: False
 Accept wildcard characters: False
 ```
@@ -452,15 +459,19 @@ This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable
 
 ### None
 
-You cannot pipe objects to `Export-PSSession`.
+You can't pipe objects to this cmdlet.
 
 ## OUTPUTS
 
 ### System.IO.FileInfo
 
-`Export-PSSession` returns a list of files that comprise the module that it created.
+This cmdlet returns a list of files that comprise the module that it created.
 
 ## NOTES
+
+Windows PowerShell includes the following aliases for `Export-PSSession`:
+
+- `epsn`
 
 `Export-PSSession` relies on the PowerShell remoting infrastructure. To use this cmdlet, the
 computer must be configured for remoting. For more information, see

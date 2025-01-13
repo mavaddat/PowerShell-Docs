@@ -2,8 +2,8 @@
 external help file: Microsoft.PowerShell.Commands.Utility.dll-Help.xml
 Locale: en-US
 Module Name: Microsoft.PowerShell.Utility
-ms.date: 09/14/2020
-online version: https://docs.microsoft.com/powershell/module/microsoft.powershell.utility/write-host?view=powershell-5.1&WT.mc_id=ps-gethelp
+ms.date: 09/26/2023
+online version: https://learn.microsoft.com/powershell/module/microsoft.powershell.utility/write-host?view=powershell-5.1&WT.mc_id=ps-gethelp
 schema: 2.0.0
 title: Write-Host
 ---
@@ -24,10 +24,10 @@ Write-Host [[-Object] <Object>] [-NoNewline] [-Separator <Object>] [-ForegroundC
 ## DESCRIPTION
 
 The `Write-Host` cmdlet's primary purpose is to produce for-(host)-display-only output, such as
-printing colored text like when prompting the user for input in conjunction with [Read-Host](Read-Host.md).
-`Write-Host` uses the [ToString()](/dotnet/api/system.object.tostring) method to write the
-output. By contrast, to output data to the pipeline, use [Write-Output](Write-Output.md) or implicit
-output.
+printing colored text like when prompting the user for input in conjunction with
+[Read-Host](Read-Host.md). `Write-Host` uses the [ToString()](/dotnet/api/system.object.tostring)
+method to write the output. By contrast, to output data to the pipeline, use
+[Write-Output](Write-Output.md) or implicit output.
 
 You can specify the color of text by using the `ForegroundColor` parameter, and you can specify the
 background color by using the `BackgroundColor` parameter. The Separator parameter lets you specify
@@ -107,17 +107,14 @@ parameter.
 ```powershell
 # The following two statements can be used to effectively suppress output from Write-Host
 Write-Host "I won't print" -InformationAction Ignore
-Write-Host "I won't print" 6>$null
-```
-
-```output
-
+Write-Host "I won't print" 6> $null
 ```
 
 These commands effectively suppress output of the `Write-Host` cmdlet. The first one uses the
 `InformationAction` parameter with the `Ignore` Value to suppress output to the information stream.
 The second example redirects the information stream of the command to the `$null` variable and
-thereby suppresses it.
+thereby suppresses it. For more information, see
+[about_Output_Streams](../Microsoft.PowerShell.Core/About/about_Output_Streams.md).
 
 ## PARAMETERS
 
@@ -125,22 +122,22 @@ thereby suppresses it.
 
 Specifies the background color. There is no default. The acceptable values for this parameter are:
 
-- Black
-- DarkBlue
-- DarkGreen
-- DarkCyan
-- DarkRed
-- DarkMagenta
-- DarkYellow
-- Gray
-- DarkGray
-- Blue
-- Green
-- Cyan
-- Red
-- Magenta
-- Yellow
-- White
+- `Black`
+- `DarkBlue`
+- `DarkGreen`
+- `DarkCyan`
+- `DarkRed`
+- `DarkMagenta`
+- `DarkYellow`
+- `Gray`
+- `DarkGray`
+- `Blue`
+- `Green`
+- `Cyan`
+- `Red`
+- `Magenta`
+- `Yellow`
+- `White`
 
 ```yaml
 Type: System.ConsoleColor
@@ -159,22 +156,22 @@ Accept wildcard characters: False
 
 Specifies the text color. There is no default. The acceptable values for this parameter are:
 
-- Black
-- DarkBlue
-- DarkGreen
-- DarkCyan
-- DarkRed
-- DarkMagenta
-- DarkYellow
-- Gray
-- DarkGray
-- Blue
-- Green
-- Cyan
-- Red
-- Magenta
-- Yellow
-- White
+- `Black`
+- `DarkBlue`
+- `DarkGreen`
+- `DarkCyan`
+- `DarkRed`
+- `DarkMagenta`
+- `DarkYellow`
+- `Gray`
+- `DarkGray`
+- `Blue`
+- `Green`
+- `Cyan`
+- `Red`
+- `Magenta`
+- `Yellow`
+- `White`
 
 ```yaml
 Type: System.ConsoleColor
@@ -239,20 +236,24 @@ Accept wildcard characters: False
 ```
 
 ### CommonParameters
-This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable, -InformationAction, -InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose, -WarningAction, and -WarningVariable. For more information, see [about_CommonParameters](https://go.microsoft.com/fwlink/?LinkID=113216).
+
+This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable,
+-InformationAction, -InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose,
+-WarningAction, and -WarningVariable. For more information, see
+[about_CommonParameters](https://go.microsoft.com/fwlink/?LinkID=113216).
 
 ## INPUTS
 
 ### System.Object
 
-You can pipe objects to be written to the host.
+You can pipe objects to be written to the host to this cmdlet.
 
 ## OUTPUTS
 
 ### None
 
-`Write-Host` sends the objects to the host. It does not return any objects. However, the host
-displays the objects that `Write-Host` sends to it.
+This cmdlet returns no output. It sends the objects to the host. The host displays the objects this
+cmdlet sends to it.
 
 ## NOTES
 

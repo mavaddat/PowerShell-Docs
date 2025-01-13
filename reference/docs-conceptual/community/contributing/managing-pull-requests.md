@@ -1,7 +1,6 @@
 ---
 description: This article explains how the PowerShell-Docs team manages pull requests.
-ms.date: 05/05/2022
-ms.topic: conceptual
+ms.date: 07/25/2022
 title: How we manage pull requests
 ---
 # Managing pull requests
@@ -15,28 +14,31 @@ process transparency for our public contributors.
 - The person submitting the PR shouldn't merge the PR without a peer review.
 - Assign the peer reviewer when the PR is submitted. Early assignment allows the reviewer to respond
   sooner with editorial remarks.
-- Use comments to describe the nature of the change or the type of review being requested. Be sure
-  to @mention the reviewer. For example, if the change is minor and you don't need a full technical
-  review, explain this in a comment.
+- Use comments to describe the nature of the change being submitted. Be sure to @mention the
+  reviewer. For example, if the change is minor and you don't need a full technical review, explain
+  this in a comment.
+- Reviewers should use the comment suggestion feature, when appropriate, to make it easier for the
+  author to accept the suggested change. For more information, see
+  [Reviewing proposed changes in a pull request][1].
 
 ## PR Process steps
 
 1. Writer: Create PR
+   - Fill out the [PR template][2]
    - Link any issues resolved by the PR
-   - Use GitHub's [autoclose](https://help.github.com/en/articles/closing-issues-using-keywords)
-     feature to close the issue
+   - Use GitHub's [autoclose][3] feature to close the issue
+   - Work through and check off each item in the checklist
 1. Writer: Assign peer reviewer
 1. Reviewer: proofreads and comments (as necessary)
 1. Writer: Incorporate review feedback
 1. Both: Review preview rendering
 1. Both: Review validation report - fix warnings and errors
-1. Writer: Add sign-off comment (include Acrolinx info)
 1. Reviewer: Mark review "Approved"
 1. Repo Admin: Merge PR (see below for criteria)
 
 ## Content Reviewer Checklist
 
-See the [editorial checklist](editorial-checklist.md) for a more comprehensive list.
+See the [editorial checklist][4] for a more comprehensive list.
 
 - Proofread for grammar, style, concision, technical accuracy
 - Ensure examples still apply for the target version
@@ -56,18 +58,20 @@ See the [editorial checklist](editorial-checklist.md) for a more comprehensive l
     - File links for local files
     - URL links for files outside of the docset
   - Remove locales from URLs
-  - Simplify URLs pointing to `docs.microsoft.com`
+  - Simplify URLs pointing to `learn.microsoft.com`
+- Verify versioned content is correct across all versions
+  - Review the [versioned content change report][5] to see summarized changes
 
 ## Branch Merge Process
 
-The `main` branch is the only branch that is merged into `live`. Merges from short-lived
-(working) branches should be squashed.
+The `main` branch is the only branch that's merged into `live`. Merges from short-lived (working)
+branches should be squashed.
 
-| *Merge from/to*  | *release-branch* |      *main*      |   *live*    |
+| _Merge from/to_  | _release-branch_ |      _main_      |   _live_    |
 | ---------------- | :--------------: | :--------------: | :---------: |
-| *working-branch* | squash and merge | squash and merge | Not allowed |
-| *release-branch* |     &mdash;      |      merge       | Not allowed |
-| *main*           |      rebase      |     &mdash;      |    merge    |
+| _working-branch_ | squash and merge | squash and merge | Not allowed |
+| _release-branch_ |     &mdash;      |      merge       | Not allowed |
+| _main_           |      rebase      |     &mdash;      |    merge    |
 
 ### PR Merger checklist
 
@@ -75,8 +79,10 @@ The `main` branch is the only branch that is merged into `live`. Merges from sho
 - Correct target branch for the change
 - No merge conflicts
 - All validation and build step pass
-  - Warnings and suggestions should be fixed (see [Notes](#notes) for exceptions)
+  - Warnings and suggestions should be fixed (see [Notes][6] for exceptions)
   - No broken links
+  - The [Checklist][7] action ran and passed
+  - If an [Authorization][8] check was triggered, it passed
 - Merge according to table
 
 ### Notes
@@ -96,9 +102,9 @@ Docs platform, so the values set in these 3 places will be ignored. Please remov
 
 When a PR is merged, the HEAD of the target branch is changed. Any open PRs that were based on the
 previous HEAD are now outdated. The outdated PR can be merged using Admin rights to override the
-merge warnings in GitHub. This is safe to do if the previously merged PR(s) have not touched the
-same files. However, clicking the **Update Branch** button is the safest option. You may have
-unresolved conflicts that need to be fixed.
+merge warnings in GitHub. This is safe to do if the previously merged PRs haven't touched the same
+files. Clicking the **Update Branch** button is the safest option. Choose **Update with rebase**
+option. For more information see [Updating your pull request branch][9].
 
 ## Publishing to Live
 
@@ -113,3 +119,14 @@ website.
   - Changes to the redirection file
   - Changes to the TOC
   - After merging a "project" branch (content reorg, bulk update, etc.)
+
+<!-- link references -->
+[1]: https://docs.github.com/pull-requests/collaborating-with-pull-requests/reviewing-changes-in-pull-requests/reviewing-proposed-changes-in-a-pull-request
+[2]: pull-requests.md#use-the-pr-template
+[3]: https://help.github.com/en/articles/closing-issues-using-keywords
+[4]: editorial-checklist.md
+[5]: pull-requests.md#versioned-content-change-reporting
+[6]: #notes
+[7]: pull-requests.md#checklist-verification
+[8]: pull-requests.md#authorization-verification
+[9]: https://docs.github.com/pull-requests/collaborating-with-pull-requests/proposing-changes-to-your-work-with-pull-requests/keeping-your-pull-request-in-sync-with-the-base-branch#updating-your-pull-request-branch

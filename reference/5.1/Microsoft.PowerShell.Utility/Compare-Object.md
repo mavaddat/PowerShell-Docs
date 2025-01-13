@@ -2,11 +2,12 @@
 external help file: Microsoft.PowerShell.Commands.Utility.dll-Help.xml
 Locale: en-US
 Module Name: Microsoft.PowerShell.Utility
-ms.date: 01/25/2022
-online version: https://docs.microsoft.com/powershell/module/microsoft.powershell.utility/compare-object?view=powershell-5.1&WT.mc_id=ps-gethelp
+ms.date: 06/11/2024
+online version: https://learn.microsoft.com/powershell/module/microsoft.powershell.utility/compare-object?view=powershell-5.1&WT.mc_id=ps-gethelp
 schema: 2.0.0
 title: Compare-Object
 ---
+
 # Compare-Object
 
 ## SYNOPSIS
@@ -89,9 +90,9 @@ InputObject SideIndicator
 bird        ==
 ```
 
-<a id="ex3" />
-
 ### Example 3 - Show the difference when using the PassThru parameter
+
+<a id="ex3" ></a>
 
 Normally, `Compare-Object` returns a **PSCustomObject** type with the following properties:
 
@@ -441,12 +442,12 @@ You can send an object down the pipeline to the **DifferenceObject** parameter.
 
 ### None
 
-If the **reference** object and the **difference** object are the same, there's no output, unless
-you use the **IncludeEqual** parameter.
+By default, this cmdlet returns no output when the **ReferenceObject** and the **DifferenceObject**
+are the same.
 
 ### System.Management.Automation.PSCustomObject
 
-If the objects are different, `Compare-Object` wraps the differing objects in a `PSCustomObject`
+When the objects are different, this cmdlet wraps the differing objects in a **PSCustomObject**
 wrapper with a **SideIndicator** property to reference the differences.
 
 When you use the **PassThru** parameter, the **Type** of the object is not changed but the instance
@@ -454,6 +455,11 @@ of the object returned has an added **NoteProperty** named **SideIndicator**. **
 shows which input object the output belongs to.
 
 ## NOTES
+
+Windows PowerShell includes the following aliases for `Compare-Object`:
+
+- `compare`
+- `diff`
 
 When using the **PassThru** parameter, the output displayed in the console may not include the
 **SideIndicator** property. The default format view for the object type output by `Compare-Object`

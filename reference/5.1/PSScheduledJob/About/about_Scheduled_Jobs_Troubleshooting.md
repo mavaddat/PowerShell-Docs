@@ -2,9 +2,9 @@
 description: Explains how to resolve problems with scheduled jobs
 Locale: en-US
 ms.date: 06/09/2017
-online version: https://docs.microsoft.com/powershell/module/psscheduledjob/about/about_scheduled_jobs_troubleshooting?view=powershell-5.1&WT.mc_id=ps-gethelp
+online version: https://learn.microsoft.com/powershell/module/psscheduledjob/about/about_scheduled_jobs_troubleshooting?view=powershell-5.1&WT.mc_id=ps-gethelp
 schema: 2.0.0
-title: about Scheduled Jobs Troubleshooting
+title: about_Scheduled_Jobs_Troubleshooting
 ---
 
 # about_Scheduled_Jobs_Troubleshooting
@@ -100,7 +100,7 @@ The execution history contains a record of all triggered job instances.
 Verify that there is a timestamp-named directory in the directory for a
 scheduled job in the following path:
 
-`$home\AppData\Local\Microsoft\Windows\PowerShell\ScheduledJob\<ScheduledJobName>\Output`
+`$HOME\AppData\Local\Microsoft\Windows\PowerShell\ScheduledJob\<ScheduledJobName>\Output`
 
 For example:
 
@@ -110,7 +110,7 @@ For example, the `Get-ChildItem` cmdlet gets the on-disk execution history of
 the **ProcessJob** scheduled job.
 
 ```powershell
-$Path = '$home\AppData\Local\Microsoft\Windows\PowerShell'
+$Path = '$HOME\AppData\Local\Microsoft\Windows\PowerShell'
 $Path += '\ScheduledJobs\ProcessJob\Output'
 Get-ChildItem $Path
 ```
@@ -139,7 +139,7 @@ saved instance of the **ProcessJob** scheduled job. If the **Results.xml** file
 is missing, PowerShell cannot return or display the job results.
 
 ```powershell
-$Path = '$home\AppData\Local\Microsoft\Windows\PowerShell'
+$Path = '$HOME\AppData\Local\Microsoft\Windows\PowerShell'
 $Path += '\ScheduledJobs\ProcessJob\Output\*\Results.xml'
 Get-ChildItem $Path
 ```

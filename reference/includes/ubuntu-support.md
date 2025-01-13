@@ -1,39 +1,34 @@
 ---
 author: sdwheeler
 ms.author: sewhee
-ms.date: 05/18/2022
-ms.prod: powershell
+ms.date: 11/02/2024
 ms.topic: include
 ---
-The following table is a list of currently supported PowerShell releases and the versions of
-Ubuntu they are supported on. These versions remain supported until either the version of
-[PowerShell reaches end-of-support][lifecycle] or the version of
+<!-- markdownlint-disable first-line-h1 -->
+Microsoft supports PowerShell until [PowerShell reaches end-of-support][lifecycle] or the version of
 [Ubuntu reaches end-of-support][eol-ubuntu].
 
-- A &#x2705; indicates that the version of the OS or PowerShell is still supported
-- A &#x274c; indicates that the version of the OS or PowerShell isn't supported
-- A &#x1f7e1; indicates the version of PowerShell is no longer supported on that version of the OS
-- When both the version of the OS and the version of PowerShell have &#x2705;, that combination is
-  supported
+Install package files (`.deb`) are also available from [https://packages.microsoft.com/][pcm].
 
-|        Ubuntu        | 7.0 (LTS) |    7.1    | 7.2 (LTS-current) | 7.3 (preview) |
-| -------------------- | :-------: | :-------: | :---------------: | :-----------: |
-| &#x2705; 22.04 (LTS) | &#x274c;  | &#x1f7e1; |     &#x2705;      |   &#x2705;    |
-| &#x2705; 20.04 (LTS) | &#x2705;  | &#x1f7e1; |     &#x2705;      |   &#x2705;    |
-| &#x2705; 18.04 (LTS) | &#x2705;  | &#x1f7e1; |     &#x2705;      |   &#x2705;    |
-| &#x274c; 16.04 (LTS) | &#x1f7e1; | &#x1f7e1; |     &#x274c;      |   &#x274c;    |
+Docker images containing PowerShell 7.4 and PowerShell 7.5-preview for x64 and Arm32 are available
+from the [Microsoft Artifact Registry][mcr] for the following versions of Ubuntu:
 
-Only the LTS releases of Ubuntu are officially supported. Microsoft does not support
-[interim releases][interim] or their equivalent. Interim releases are community supported. For more
-information, see [Community supported distributions][community].
+- Ubuntu 24.04 (Noble Numbat) - OS support ends on 2029-04-01
+- Ubuntu 22.04 (Jammy Jellyfish) - OS support ends on 2027-04-01
+- Ubuntu 20.04 (Focal Fossa) - OS support ends on 2025-04-02
 
-PowerShell is supported on Ubuntu for the following processor architectures.
+Ubuntu 24.10 (Oracular Oriole) is an interim release. Microsoft doesn't support
+[interim releases][interim] of Ubuntu. For more information, see
+[Community supported distributions][community].
 
-|         Ubuntu         |     7.0 (LTS)     | 7.2 (LTS-current) |   7.3 (preview)   |
-| ---------------------- | :---------------: | :---------------: | :---------------: |
-| All supported versions | x64, Arm32, Arm64 | x64, Arm32, Arm64 | x64, Arm32, Arm64 |
+> [!IMPORTANT]
+> The Docker images are built from official operating system (OS) images provide by the OS
+> distributor. These images may not have the latest security updates. Microsoft recommends that you
+> update the OS packages to the latest version to ensure the latest security updates are applied.
 
-[eol-ubuntu]: https://wiki.ubuntu.com/Releases
+[eol-ubuntu]: https://endoflife.date/ubuntu
 [interim]: https://ubuntu.com/about/release-cycle
 [lifecycle]: /powershell/scripting/install/powershell-support-lifecycle
 [community]: /powershell/scripting/install/community-support
+[mcr]: https://mcr.microsoft.com/product/powershell/tags
+[pcm]: https://packages.microsoft.com/

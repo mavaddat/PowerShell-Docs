@@ -1,5 +1,3 @@
 {
-  "dictionaries": [
-    "powershell"
-  ]
+    "import": "./cspell/psdocs/cspell.yaml"
 }

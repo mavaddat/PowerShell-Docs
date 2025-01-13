@@ -143,7 +143,7 @@ classes.
 
 ### Creating an InitialSessionState object
 
-To create a custom runspace, you must first create an
+To create a custom runspace, you must first create a
 [System.Management.Automation.Runspaces.InitialSessionState](/dotnet/api/System.Management.Automation.Runspaces.InitialSessionState)
 object. In the following example, we use the
 [System.Management.Automation.Runspaces.RunspaceFactory](/dotnet/api/System.Management.Automation.Runspaces.RunspaceFactory)
@@ -157,6 +157,7 @@ PowerShell ps = PowerShell.Create();
 ps.Runspace = rs;
 ps.AddCommand("Get-Command");
 ps.Invoke();
+rs.Close();
 ```
 
 ### Constraining the runspace
@@ -216,6 +217,12 @@ foreach (var entry in result)
 {
     Console.WriteLine(entry.Name);
 }
+```
+
+Close the runspace.
+
+```csharp
+rs.Close();
 ```
 
 When run, the output of this code will look as follows.

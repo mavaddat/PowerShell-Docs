@@ -47,7 +47,7 @@ The following steps describe how to create a PowerShell module.
        [DateTime] $end = $start,
        $firstDayOfWeek,
        [int[]] $highlightDay,
-       [string[]] $highlightDate = [DateTime]::Today.ToString()
+       [string[]] $highlightDate = [DateTime]::Today.ToString('yyyy-MM-dd')
        )
 
        #actual code for the function goes here see the end of the topic for the complete code sample
@@ -111,11 +111,12 @@ The following steps describe how to create a PowerShell module.
    specify the module's location in the `Import-Module` command. Otherwise, PowerShell wouldn't be
    able to find the module.
 
-   Starting with PowerShell 3.0, if you've placed your module in one of the PowerShell module paths,
-   you don't need to explicitly import it. Your module is automatically loaded when a user calls
-   your function. For more information about the module path, see
-   [Importing a PowerShell Module](./importing-a-powershell-module.md) and
-   [about_PSModulePath](/powershell/module/microsoft.powershell.core/about/about_psmodulepath).
+   > [!NOTE]
+   > Starting with PowerShell 3.0, if you've placed your module in one of the PowerShell module paths,
+   > you don't need to explicitly import it. Your module is automatically loaded when a user calls
+   > your function. For more information about the module path, see
+   > [Importing a PowerShell Module](./importing-a-powershell-module.md) and
+   > [about_PSModulePath](/powershell/module/microsoft.powershell.core/about/about_psmodulepath).
 
 1. To remove a module from active service in the current PowerShell session, use
    [Remove-Module](/powershell/module/Microsoft.PowerShell.Core/Remove-Module).
@@ -168,7 +169,7 @@ member.
 
  .Example
    # Highlight a range of days.
-   Show-Calendar -HighlightDay (1..10 + 22) -HighlightDate "December 25, 2008"
+   Show-Calendar -HighlightDay (1..10 + 22) -HighlightDate "2008-12-25"
 #>
 function Show-Calendar {
 param(
@@ -176,7 +177,7 @@ param(
     [DateTime] $end = $start,
     $firstDayOfWeek,
     [int[]] $highlightDay,
-    [string[]] $highlightDate = [DateTime]::Today.ToString()
+    [string[]] $highlightDate = [DateTime]::Today.ToString('yyyy-MM-dd')
     )
 
 ## Determine the first day of the start and end months.

@@ -1,17 +1,16 @@
 ---
 description: Describes a statement you can use to immediately exit `foreach`, `for`, `while`, `do`, `switch`, or `trap` statements.
 Locale: en-US
-ms.date: 06/04/2020
-online version: https://docs.microsoft.com/powershell/module/microsoft.powershell.core/about/about_break?view=powershell-5.1&WT.mc_id=ps-gethelp
+ms.date: 12/26/2024
+online version: https://learn.microsoft.com/powershell/module/microsoft.powershell.core/about/about_break?view=powershell-5.1&WT.mc_id=ps-gethelp
 schema: 2.0.0
-title: about Break
+title: about_Break
 ---
 # about_Break
 
 ## Short description
-
-Describes a statement you can use to immediately exit `foreach`, `for`,
-`while`, `do`, `switch`, or `trap` statements.
+Describes the `break` statement, which provides a way to exit the current
+control block.
 
 ## Long description
 
@@ -170,7 +169,7 @@ when the most specific condition is met.
 If the final statement executed in the body of a `trap` statement is `break`,
 the error object is suppressed and the exception is re-thrown.
 
-The following example create a **DivideByZeroException** exception that is
+The following example creates a **DivideByZeroException** exception that is
 trapped using the `trap` statement.
 
 ```powershell

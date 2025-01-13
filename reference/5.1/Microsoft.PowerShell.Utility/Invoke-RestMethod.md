@@ -2,8 +2,8 @@
 external help file: Microsoft.PowerShell.Commands.Utility.dll-Help.xml
 Locale: en-US
 Module Name: Microsoft.PowerShell.Utility
-ms.date: 02/28/2022
-online version: https://docs.microsoft.com/powershell/module/microsoft.powershell.utility/invoke-restmethod?view=powershell-5.1&WT.mc_id=ps-gethelp
+ms.date: 01/03/2024
+online version: https://learn.microsoft.com/powershell/module/microsoft.powershell.utility/invoke-restmethod?view=powershell-5.1&WT.mc_id=ps-gethelp
 schema: 2.0.0
 title: Invoke-RestMethod
 ---
@@ -229,11 +229,11 @@ Accept wildcard characters: False
 Specifies the digital public key certificate (X509) of a user account that has permission to send
 the request. Enter the certificate thumbprint of the certificate.
 
-Certificates are used in client certificate-based authentication. They can be mapped only to local
-user accounts; they do not work with domain accounts.
+Certificates are used in client certificate-based authentication. Certificates can only be mapped
+only to local user accounts, not domain accounts.
 
-To get a certificate thumbprint, use the `Get-Item` or `Get-ChildItem` command in the Windows
-PowerShell (`Cert:`) drive.
+To see the certificate thumbprint, use the `Get-Item` or `Get-ChildItem` command to find the
+certificate in `Cert:\CurrentUser\My`.
 
 ```yaml
 Type: System.String
@@ -691,20 +691,31 @@ This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable
 
 ### System.Object
 
-You can pipe the body of a web request to `Invoke-RestMethod`.
+You can pipe the body of a web request to this cmdlet.
 
 ## OUTPUTS
 
-### System.Xml.XmlDocument, Microsoft.PowerShell.Commands.HtmlWebResponseObject, System.String
+### System.Int64
 
-The output of the cmdlet depends upon the format of the content that is retrieved.
+When the request returns an integer, this cmdlet returns that integer.
+
+### System.String
+
+When the request returns a string, this cmdlet returns that string.
+
+### System.Xml.XmlDocument
+
+When the request returns valid XML, this cmdlet returns it as an **XmlDocument**.
 
 ### PSObject
 
-If the request returns JSON strings, `Invoke-RestMethod` returns a PSObject that represents the
-strings.
+When the request returns JSON strings, this cmdlet returns a **PSObject** representing the data.
 
 ## NOTES
+
+Windows PowerShell includes the following aliases for `Invoke-RestMethod`:
+
+- `irm`
 
 ## RELATED LINKS
 

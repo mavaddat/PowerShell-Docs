@@ -3,7 +3,7 @@ external help file: Microsoft.PowerShell.Commands.Management.dll-Help.xml
 Locale: en-US
 Module Name: Microsoft.PowerShell.Management
 ms.date: 10/01/2021
-online version: https://docs.microsoft.com/powershell/module/microsoft.powershell.management/test-computersecurechannel?view=powershell-5.1&WT.mc_id=ps-gethelp
+online version: https://learn.microsoft.com/powershell/module/microsoft.powershell.management/test-computersecurechannel?view=powershell-5.1&WT.mc_id=ps-gethelp
 schema: 2.0.0
 title: Test-ComputerSecureChannel
 ---
@@ -11,6 +11,7 @@ title: Test-ComputerSecureChannel
 # Test-ComputerSecureChannel
 
 ## SYNOPSIS
+
 Tests and repairs the secure channel between the local computer and its domain.
 
 ## SYNTAX
@@ -89,11 +90,7 @@ else {
 This example shows how to use `Test-ComputerSecureChannel` to test a connection before you run a
 script that requires the connection.
 
-The first command uses the Set-Alias cmdlet to create an alias for the cmdlet name. This saves space
-and prevents typing errors.
-
-The `if` statement checks the value that `Test-ComputerSecureChannel` returns before it runs a
-script.
+The `if` statement checks the value that `Test-ComputerSecureChannel` returns before it runs a script.
 
 ## PARAMETERS
 

@@ -1,10 +1,10 @@
 ---
 description: Explains how to use `Types.ps1xml` files to extend the types of objects that are used in PowerShell.
 Locale: en-US
-ms.date: 04/30/2021
-online version: https://docs.microsoft.com/powershell/module/microsoft.powershell.core/about/about_types.ps1xml?view=powershell-5.1&WT.mc_id=ps-gethelp
+ms.date: 08/07/2024
+online version: https://learn.microsoft.com/powershell/module/microsoft.powershell.core/about/about_types.ps1xml?view=powershell-5.1&WT.mc_id=ps-gethelp
 schema: 2.0.0
-title: about Types.ps1xml
+title: about_Types.ps1xml
 ---
 # about_Types.ps1xml
 
@@ -59,7 +59,7 @@ directory (`$PSHOME`).
 
 There are three sources of extended type data in PowerShell sessions.
 
-- Extended type data is defined by PowerShell and loaded automatically into 
+- Extended type data is defined by PowerShell and loaded automatically into
   every PowerShell session.
 
 - The `Types.ps1xml` files that modules export are loaded when the module
@@ -357,8 +357,9 @@ following:
 For example, the following XML defines the default display of services
 (`System.ServiceProcess.ServiceController` objects) that are returned by the
 `Get-Service` cmdlet. It defines a member set named **PsStandardMembers** that
-consists of a default property set with the **Status**, **Name**, and
-**DisplayName** properties.
+consists of a default property set and a default display property. It defines
+the default property set as the **Status**, **Name**, and **DisplayName**
+properties. It defines the default display property as **Name**.
 
 ```xml
 <Type>
@@ -375,6 +376,10 @@ consists of a default property set with the **Status**, **Name**, and
             <Name>DisplayName</Name>
           </ReferencedProperties>
         </PropertySet>
+        <NoteProperty>
+          <Name>DefaultDisplayProperty</Name>
+          <Value>Name</Value>
+        </NoteProperty>
       </Members>
     </MemberSet>
   </Members>

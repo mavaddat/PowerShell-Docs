@@ -1,7 +1,7 @@
 ---
 description: The PowerShell $null often appears to be simple but it has a lot of nuances. Let's take a close look at $null so you know what happens when you unexpectedly run into a null value.
 ms.custom: contributor-KevinMarquette
-ms.date: 10/05/2021
+ms.date: 06/11/2024
 title: Everything you wanted to know about $null
 ---
 # Everything you wanted to know about $null
@@ -96,7 +96,7 @@ False
 
 ### In place of a collection
 
-A collection allow you use an index to access values. If you try to index into a collection that is
+A collection allows you use an index to access values. If you try to index into a collection that is
 actually `null`, you get this error: `Cannot index into a null array`.
 
 ```powershell
@@ -224,7 +224,7 @@ looking for exactly what you're expecting it to look for. I read that line of co
 
 But that's not the whole story. That line is actually saying:
 
-> If `$value` is not `$null` or `0` or `$false` or an `empty string`
+> If `$value` is not `$null` or `0` or `$false` or an empty string or an empty array.
 
 Here is a more complete sample of that statement.
 
@@ -232,6 +232,7 @@ Here is a more complete sample of that statement.
 if ( $null -ne $value -and
         $value -ne 0 -and
         $value -ne '' -and
+        ($value -isnot [array] -or $value.Length -ne 0) -and
         $value -ne $false )
 {
     Do-Something
@@ -297,12 +298,13 @@ if ( $value.count -eq 1 )
 }
 ```
 
-## Empty null
+## Enumerable null
 
 There is one special type of `$null` that acts differently than the others. I am going to call it
-the empty `$null` but it's really a [System.Management.Automation.Internal.AutomationNull][System.Management.Automation.Internal.AutomationNull]. This
-empty `$null` is the one you get as the result of a function or script block that returns nothing (a
-void result).
+the enumerable null but it's really a
+[System.Management.Automation.Internal.AutomationNull][System.Management.Automation.Internal.AutomationNull].
+This enumerable null is the one you get as the result of a function or script block that returns
+nothing (a void result).
 
 ```powershell
 PS> function Get-Nothing {}
@@ -329,18 +331,19 @@ PS> $containnull.count
 ```
 
 You can have an array that contains one `$null` value and its `count` is `1`. But if you place
-an empty result inside an array then it's not counted as an item. The count is `0`.
+an empty array inside an array then it's not counted as an item. The count is `0`.
 
-If you treat the empty `$null` like a collection, then it's empty.
+If you treat the enumerable null like a collection, then it's empty.
 
-If you pass in an empty value to a function parameter that isn't strongly typed, PowerShell coerces
-the nothing value into a `$null` value by default. This means inside the function, the value will be
-treated as `$null` instead of the **System.Management.Automation.Internal.AutomationNull** type.
+If you pass in an enumerable null to a function parameter that isn't strongly typed, PowerShell
+coerces the enumerable null into a `$null` value by default. This means inside the function, the
+value is treated as `$null` instead of the **System.Management.Automation.Internal.AutomationNull**
+type.
 
 ### Pipeline
 
 The primary place you see the difference is when using the pipeline. You can pipe a `$null`
-value but not an empty `$null` value.
+value but not an enumerable null value.
 
 ```powershell
 PS> $null | ForEach-Object{ Write-Output 'NULL Value' }
@@ -475,9 +478,9 @@ those scenarios earlier in this post.
 ### No results scenario
 
 It's important to know that different functions and commands handle the no results scenario
-differently. Many PowerShell commands return the empty `$null` and an error in the error stream. But
-others throw exceptions or give you a status object. It's still up to you to know how the commands
-you use deal with the no results and error scenarios.
+differently. Many PowerShell commands return the enumerable null and an error in the error stream.
+But others throw exceptions or give you a status object. It's still up to you to know how the
+commands you use deal with the no results and error scenarios.
 
 ## Initializing to $null
 
@@ -510,8 +513,8 @@ function Do-Something
 }
 ```
 
-The expectation here is that `Get-Something` returns either a result or an empty `$null`. If there
-is an error, we log it. Then we check to make sure we got a valid result before processing it.
+The expectation here is that `Get-Something` returns either a result or an enumerable null. If
+there's an error, we log it. Then we check to make sure we got a valid result before processing it.
 
 The bug hiding in this code is when `Get-Something` throws an exception and doesn't assign a value
 to `$result`. It fails before the assignment so we don't even assign `$null` to the `$result`

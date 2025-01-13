@@ -1,10 +1,10 @@
 ---
 description: Describes how to use splatting to pass parameters to commands in PowerShell.
 Locale: en-US
-ms.date: 04/08/2020
-online version: https://docs.microsoft.com/powershell/module/microsoft.powershell.core/about/about_splatting?view=powershell-5.1&WT.mc_id=ps-gethelp
+ms.date: 01/29/2024
+online version: https://learn.microsoft.com/powershell/module/microsoft.powershell.core/about/about_splatting?view=powershell-5.1&WT.mc_id=ps-gethelp
 schema: 2.0.0
-title: about Splatting
+title: about_Splatting
 ---
 
 # about_Splatting
@@ -133,6 +133,7 @@ Invoke-Command -ScriptBlock {
 ```
 
 In this example, only the first item in `$array` is passed to the script block.
+
 ```Output
 Hello
 ```
@@ -141,7 +142,7 @@ Hello
 $array = 'Hello', 'World!'
 Invoke-Command -ScriptBlock {
   param([string[]]$words) $words -join ' '
-  } -ArgumentList (,$array)
+} -ArgumentList (,$array)
 ```
 
 In this example, `$array` is wrapped in an array so that the entire
@@ -152,6 +153,8 @@ Hello World!
 ```
 
 ## Examples
+
+### Example 1: Reuse splatted parameters in different commands
 
 This example shows how to reuse splatted values in different commands. The
 commands in this example use the `Write-Host` cmdlet to write messages to the
@@ -181,7 +184,9 @@ Write-Host "This is a test." @Colors
 Write-Host @Colors "This is another test."
 ```
 
-This example shows how to forward their parameters to other commands by using
+### Example 2: Forward parameters using $PSBoundParameters
+
+This example shows how to forward their parameters to other commands using
 splatting and the `$PSBoundParameters` automatic variable.
 
 The `$PSBoundParameters` automatic variable is a dictionary object
@@ -198,9 +203,9 @@ function Test1
 {
     param($a, $b, $c)
 
-    $a
-    $b
-    $c
+    "a = $a"
+    "b = $b"
+    "c = $c"
 }
 
 function Test2
@@ -208,22 +213,42 @@ function Test2
     param($a, $b, $c)
 
     #Call the Test1 function with $a, $b, and $c.
-    Test1 @PsBoundParameters
+    Test1 @PSBoundParameters
 
     #Call the Test1 function with $b and $c, but not with $a
-    $LimitedParameters = $PSBoundParameters
-    $LimitedParameters.Remove("a") | Out-Null
-    Test1 @LimitedParameters
+    Test1 -b $PSBoundParameters.b -c $PSBoundParameters.c
 }
+
+Test2 -a 1 -b 2 -c 3
 ```
 
 ```Output
-Test2 -a 1 -b 2 -c 3
-1
-2
-3
-2
-3
+a = 1
+b = 2
+c = 3
+a =
+b = 2
+c = 3
+```
+
+### Example 3: Using multiple splatted objects in a single command
+
+You can use multiple splatted objects in a single command. In this example,
+different parameters are defined in separate hashtables. The hashtables are
+splatted in a single `Write-Host` command.
+
+```powershell
+$a = @{
+    Message         = 'Hello', 'World!'
+}
+$b = @{
+    Separator       = '|'
+}
+$c = @{
+    BackgroundColor = 'Cyan'
+    ForegroundColor = 'Black'
+}
+Write-Host @a @b @c
 ```
 
 ## Splatting command parameters
@@ -285,13 +310,15 @@ Get-MyCommand -P -C -Name PowerShell
 ```
 
 ```Output
-Handles  NPM(K)    PM(K)      WS(K) VM(M)   CPU(s)     Id ProcessName
--------  ------    -----      ----- -----   ------     -- -----------
-408      28    75568      83176   620     1.33   1692 powershell
+Handles  NPM(K)    PM(K)      WS(K)     CPU(s)     Id  SI ProcessName
+-------  ------    -----      -----     ------     --  -- -----------
+    830      50   115840      95524      16.75   6880   1 powershell
 
-Path               : C:\Windows\System32\WindowsPowerShell\v1.0\powershell.e
+Path               : C:\Windows\System32\WindowsPowerShell\v1.0\powershell.exe
 Extension          : .exe
-Definition         : C:\Windows\System32\WindowsPowerShell\v1.0\powershell.e
+Definition         : C:\Windows\System32\WindowsPowerShell\v1.0\powershell.exe
+Source             : C:\Windows\System32\WindowsPowerShell\v1.0\powershell.exe
+Version            : 10.0.22621.3085
 Visibility         : Public
 OutputType         : {System.String}
 Name               : powershell.exe
@@ -302,14 +329,13 @@ RemotingCapability : PowerShell
 Parameters         :
 ParameterSets      :
 HelpUri            :
-FileVersionInfo    : File:             C:\Windows\System32\WindowsPowerShell
-                     \v1.0\powershell.exe
+FileVersionInfo    : File:             C:\Windows\System32\WindowsPowerShell\v1.0\powershell.exe
                      InternalName:     POWERSHELL
                      OriginalFilename: PowerShell.EXE.MUI
-                     FileVersion:      10.0.14393.0 (rs1_release.160715-1616
+                     FileVersion:      10.0.22621.1 (WinBuild.160101.0800)
                      FileDescription:  Windows PowerShell
-                     Product:          Microsoft Windows Operating System
-                     ProductVersion:   10.0.14393.0
+                     Product:          Microsoft&reg; Windows&reg; Operating System
+                     ProductVersion:   10.0.22621.1
                      Debug:            False
                      Patched:          False
                      PreRelease:       False
@@ -327,11 +353,18 @@ parameter definition.
 
 PowerShell Desired State Configuration (DSC) was not designed to use splatting.
 You cannot use splatting to pass values into a DSC resource. For more
-information, see Gael Colas' article [Pseudo-Splatting DSC Resources](https://gaelcolas.com/2017/11/05/pseudo-splatting-dsc-resources/).
+information, see Gael Colas' article [Pseudo-Splatting DSC Resources][05].
 
 ## See also
 
-- [about_Arrays](about_Arrays.md)
-- [about_Automatic_Variables](about_Automatic_Variables.md)
-- [about_Hash_Tables](about_Hash_Tables.md)
-- [about_Parameters](about_Parameters.md)
+- [about_Arrays][01]
+- [about_Automatic_Variables][02]
+- [about_Hash_Tables][03]
+- [about_Parameters][04]
+
+<!-- link references -->
+[01]: about_Arrays.md
+[02]: about_Automatic_Variables.md
+[03]: about_Hash_Tables.md
+[04]: about_Parameters.md
+[05]: https://gaelcolas.com/2017/11/05/pseudo-splatting-dsc-resources/

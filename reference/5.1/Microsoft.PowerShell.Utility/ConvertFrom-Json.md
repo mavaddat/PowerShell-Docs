@@ -2,8 +2,8 @@
 external help file: Microsoft.PowerShell.Commands.Utility.dll-Help.xml
 Locale: en-US
 Module Name: Microsoft.PowerShell.Utility
-ms.date: 10/10/2019
-online version: https://docs.microsoft.com/powershell/module/microsoft.powershell.utility/convertfrom-json?view=powershell-5.1&WT.mc_id=ps-gethelp
+ms.date: 11/29/2023
+online version: https://learn.microsoft.com/powershell/module/microsoft.powershell.utility/convertfrom-json?view=powershell-5.1&WT.mc_id=ps-gethelp
 schema: 2.0.0
 title: ConvertFrom-Json
 ---
@@ -22,17 +22,23 @@ ConvertFrom-Json [-InputObject] <String> [<CommonParameters>]
 ## DESCRIPTION
 
 The `ConvertFrom-Json` cmdlet converts a JavaScript Object Notation (JSON) formatted string to a
-custom **PSCustomObject** object that has a property for each field in the JSON string. JSON is
-commonly used by web sites to provide a textual representation of objects. The JSON standard does
-not prohibit usage that is prohibited with a **PSCustomObject**. For example, if the JSON string
-contains duplicate keys, only the last key is used by this cmdlet. See other examples below.
+custom **PSObject** or **Hashtable** object that has a property for each field in the JSON string.
+JSON is commonly used by web sites to provide a textual representation of objects. The cmdlet adds
+the properties to the new object as it processes each line of the JSON string.
+
+The JSON standard allows duplicate key names, which are prohibited in **PSObject** and **Hashtable**
+types. For example, if the JSON string contains duplicate keys, only the last key is used by this
+cmdlet. See other examples below.
 
 To generate a JSON string from any object, use the `ConvertTo-Json` cmdlet.
 
 This cmdlet was introduced in PowerShell 3.0.
 
 > [!NOTE]
-> This cmdlet doesn't support JSON with comments.
+> Beginning with PowerShell 6, the cmdlet supports JSON with comments. JSON comments start with two
+> forward slashes (`//`) characters. JSON comments aren't captured in the objects output by the
+> cmdlet. Prior to PowerShell 6, `ConvertFrom-Json` would return an error when it encountered a JSON
+> comment.
 
 ## EXAMPLES
 
@@ -89,12 +95,12 @@ This example shows how to use the `ConvertFrom-Json` cmdlet to convert a JSON fi
 custom object.
 
 ```powershell
-Get-Content JsonFile.JSON | ConvertFrom-Json
+Get-Content -Raw JsonFile.JSON | ConvertFrom-Json
 ```
 
-The command uses Get-Content cmdlet to get the strings in a JSON file. Then it uses the pipeline
-operator to send the delimited string to the `ConvertFrom-Json` cmdlet, which converts it to a
-custom object.
+The command uses Get-Content cmdlet to get the strings in a JSON file. The **Raw** parameter
+returns the whole file as a single JSON object. Then it uses the pipeline operator to send the
+delimited string to the `ConvertFrom-Json` cmdlet, which converts it to a custom object.
 
 ## PARAMETERS
 
@@ -105,8 +111,8 @@ or type a command or expression that gets the string. You can also pipe a string
 `ConvertFrom-Json`.
 
 The **InputObject** parameter is required, but its value can be an empty string. When the input
-object is an empty string, `ConvertFrom-Json` does not generate any output. The **InputObject**
-value cannot be `$null`.
+object is an empty string, `ConvertFrom-Json` doesn't generate any output. The **InputObject**
+value can't be `$null`.
 
 ```yaml
 Type: System.String
@@ -141,6 +147,10 @@ You can pipe a JSON string to `ConvertFrom-Json`.
 
 The `ConvertFrom-Json` cmdlet is implemented using the
 [JavaScriptSerializer class](/dotnet/api/system.web.script.serialization.javascriptserializer).
+
+The **PSObject** type maintains the order of the properties as presented in the JSON string. While
+the key-value pairs are added to the **Hashtable** in the order presented in the JSON string,
+**Hashtable** objects don't maintain that order.
 
 ## RELATED LINKS
 

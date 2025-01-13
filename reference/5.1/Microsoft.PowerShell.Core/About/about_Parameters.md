@@ -2,9 +2,9 @@
 description: Describes how to work with command parameters in PowerShell.
 Locale: en-US
 ms.date: 09/28/2021
-online version: https://docs.microsoft.com/powershell/module/microsoft.powershell.core/about/about_parameters?view=powershell-5.1&WT.mc_id=ps-gethelp
+online version: https://learn.microsoft.com/powershell/module/microsoft.powershell.core/about/about_parameters?view=powershell-5.1&WT.mc_id=ps-gethelp
 schema: 2.0.0
-title: about Parameters
+title: about_Parameters
 ---
 # about_Parameters
 
@@ -41,7 +41,7 @@ To find information about the parameters of a script, use the full path to the
 script file. For example:
 
 ```powershell
-Get-Help $home\Documents\Scripts\Get-Function.ps1
+Get-Help $HOME\Documents\Scripts\Get-Function.ps1
 ```
 
 The `Get-Help` cmdlet returns various details about the command, including a

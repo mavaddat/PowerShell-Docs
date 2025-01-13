@@ -2,11 +2,12 @@
 external help file: Microsoft.PowerShell.Commands.Utility.dll-Help.xml
 Locale: en-US
 Module Name: Microsoft.PowerShell.Utility
-ms.date: 08/19/2021
-online version: https://docs.microsoft.com/powershell/module/microsoft.powershell.utility/get-psbreakpoint?view=powershell-5.1&WT.mc_id=ps-gethelp
+ms.date: 12/12/2022
+online version: https://learn.microsoft.com/powershell/module/microsoft.powershell.utility/get-psbreakpoint?view=powershell-5.1&WT.mc_id=ps-gethelp
 schema: 2.0.0
 title: Get-PSBreakpoint
 ---
+
 # Get-PSBreakpoint
 
 ## SYNOPSIS
@@ -246,9 +247,11 @@ This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable
 
 ### System.Int32
 
+You can pipe breakpoint IDs to this cmdlet.
+
 ### Microsoft.PowerShell.Commands.BreakpointType
 
-You can pipe breakpoint IDs and breakpoint types to `Get-PSBreakPoint`.
+You can pipe breakpoint types to this cmdlet.
 
 ## OUTPUTS
 
@@ -260,11 +263,13 @@ You can pipe breakpoint IDs and breakpoint types to `Get-PSBreakPoint`.
 
 ### System.Management.Automation.Breakpoint
 
-`Get-PSBreakPoint` returns objects that represent the breakpoints in the session.
+This cmdlet returns objects that represent the breakpoints in the session.
 
 ## NOTES
 
-You can use `Get-PSBreakpoint` or its alias, "gbp".
+Windows PowerShell includes the following aliases for `Get-PSBreakpoint`:
+
+- `gbp`
 
 ## RELATED LINKS
 

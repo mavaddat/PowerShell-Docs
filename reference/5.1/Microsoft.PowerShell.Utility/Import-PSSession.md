@@ -2,11 +2,12 @@
 external help file: Microsoft.PowerShell.Commands.Utility.dll-Help.xml
 Locale: en-US
 Module Name: Microsoft.PowerShell.Utility
-ms.date: 04/05/2021
-online version: https://docs.microsoft.com/powershell/module/microsoft.powershell.utility/import-pssession?view=powershell-5.1&WT.mc_id=ps-gethelp
+ms.date: 12/12/2022
+online version: https://learn.microsoft.com/powershell/module/microsoft.powershell.utility/import-pssession?view=powershell-5.1&WT.mc_id=ps-gethelp
 schema: 2.0.0
 title: Import-PSSession
 ---
+
 # Import-PSSession
 
 ## SYNOPSIS
@@ -486,18 +487,25 @@ Accept wildcard characters: False
 
 ### -FullyQualifiedModule
 
-Specifies modules with names that are specified in the form of **ModuleSpecification** objects
-(described in the Remarks section of
-[ModuleSpecification Constructor (Hashtable)](/dotnet/api/microsoft.powershell.commands.modulespecification.-ctor#Microsoft_PowerShell_Commands_ModuleSpecification__ctor_System_Collections_Hashtable_)
-in the PowerShell SDK. For example, the **FullyQualifiedModule** parameter accepts a module name
-that is specified in the format:
+The value can be a module name, a full module specification, or a path to a module file.
 
-- `@{ModuleName = "modulename"; ModuleVersion = "version_number"}` or
-- `@{ModuleName = "modulename"; ModuleVersion = "version_number"; Guid = "GUID"}`.
+When the value is a path, the path can be fully qualified or relative. A relative path is resolved
+relative to the script that contains the using statement.
 
-**ModuleName** and **ModuleVersion** are required, but **Guid** is optional.
+When the value is a name or module specification, PowerShell searches the **PSModulePath** for the
+specified module.
 
-You cannot specify the **FullyQualifiedModule** parameter in the same command as a **Module**
+A module specification is a hashtable that has the following keys.
+
+- `ModuleName` - **Required** Specifies the module name.
+- `GUID` - **Optional** Specifies the GUID of the module.
+- It's also **Required** to specify at least one of the three below keys.
+  - `ModuleVersion` - Specifies a minimum acceptable version of the module.
+  - `MaximumVersion` - Specifies the maximum acceptable version of the module.
+  - `RequiredVersion` - Specifies an exact, required version of the module. This can't be used with
+    the other Version keys.
+
+You can't specify the **FullyQualifiedModule** parameter in the same command as a **Module**
 parameter. The two parameters are mutually exclusive.
 
 ```yaml
@@ -586,17 +594,21 @@ This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable
 
 ### None
 
-You cannot pipe objects to this cmdlet.
+You can't pipe objects to this cmdlet.
 
 ## OUTPUTS
 
 ### System.Management.Automation.PSModuleInfo
 
-`Import-PSSession` returns the same module object that `New-Module` and `Get-Module` cmdlets return.
+This cmdlet returns the same module object that `New-Module` and `Get-Module` cmdlets return.
 However, the imported module is temporary and exists only in the current session. To create a
 permanent module on disk, use the `Export-PSSession` cmdlet.
 
 ## NOTES
+
+Windows PowerShell includes the following aliases for `Import-PSSession`:
+
+- `ipsn`
 
 - `Import-PSSession` relies on the  PowerShell remoting infrastructure. To use this cmdlet,
   the computer must be configured for WS-Management remoting. For more information, see
